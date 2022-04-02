@@ -5,7 +5,8 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - "nkosl_net"
+      nkosl_net:
+        ipv4_address: 172.18.0.100
     volumes:
       - "blog_data:/var/lib/postresql/data"
     env_file:
@@ -15,8 +16,7 @@ services:
     ports:
       - "80:80"
     networks:
-      nkosl_net:
-        ipv4_address: 172.19.0.100
+      - "nkosl_net"
     env_file:
       - ".env"
     depends_on:
@@ -29,4 +29,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.19.0.0/24
+        - subnet: 172.18.0.0/16
