@@ -1,0 +1,32 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    networks:
+      - "nkosl_net"
+    volumes:
+      - "blog_data:/var/lib/postresql/data"
+    env_file:
+      - ".env_postgres"
+  nkosl_app:
+    build: .
+    ports:
+      - "80:80"
+    networks:
+      nkosl_net:
+        ipv4_address: 172.19.0.100
+    env_file:
+      - ".env"
+    depends_on:
+      - "postgres"     
+volumes:
+  blog_data:
+    name: "nkosl_blog_data"
+networks:
+  nkosl_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24

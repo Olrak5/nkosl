@@ -1,0 +1,7 @@
+docker run --name nkosl_app -it --env-file .env -p 80:80 --network nkosl_net nkosl-blog
+
+
+docker run -d --name postgres_test --env-file .env_postgres -p 5432:5432 -v /opt/data:/var/lib/postgresql/data --network nkosl_net postgres
+
+docker rm $(docker container ls -aq)
+docker network create nkosl_net
